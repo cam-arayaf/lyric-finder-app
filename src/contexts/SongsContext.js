@@ -1,11 +1,9 @@
-import React, { Fragment, useState, useEffect } from 'react';
-import SearchTracks from './SearchTracks';
-import Tracks from './Tracks';
-import ProgressBar from './../Common/ProgressBar';
-import Message from './../Common/Message';
-import { chartTracksGet, trackSearch } from './../../constants';
+import React, { createContext, useState, useEffect } from 'react';
+import { chartTracksGet, trackSearch } from './../constants';
 
-const Main = () => {
+export const SongsContext = createContext();
+
+const SongsContextProvider = ({ children }) => {
     const [doneFetch, setDoneFetch] = useState();
     const [currentQTrack, setCurrentQTrack] = useState('');
     const [text, setText] = useState('Top Songs In US');
@@ -47,18 +45,10 @@ const Main = () => {
     }
 
     return (
-        <Fragment>
-            <SearchTracks validateQTrack={ validateQTrack } />
-            {
-                doneFetch ?
-                    (tracks.length ? <Tracks text={ text } tracks={ tracks } /> : <Message text={ text } />)
-                :
-                    <ProgressBar />
-            }
-        </Fragment>
+        <SongsContext.Provider value={{ doneFetch, text, tracks, validateQTrack }}>
+            { children }
+        </SongsContext.Provider>
     );
-}
+};
 
-Main.displayName = 'Main';
-
-export default Main;
+export default SongsContextProvider;

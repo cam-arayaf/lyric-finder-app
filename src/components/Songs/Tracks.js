@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import Track from './Track';
 import Message from './../Common/Message';
 
-const Tracks = ({ text, tracks }) => (
+const Tracks = ({ tracks, text }) => (
     <Fragment>
         <Message text={ text }/>
         <div className="root">
